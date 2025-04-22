@@ -13,30 +13,10 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/todos?_limit=10",
-        {
-          method: "GET",
-        }
-      );
-      const data = await response.json();
-      setTasks(data);
-    };
-    fetchTasks();
-  }, []);
-
   function onTaskClick(taskId) {
-    const newTasks = tasks.map((task) => {
-      // PRECISO ATUALIZAR ESSA TAREFA
-      if (task.id === taskId) {
-        return { ...task, isCompleted: !task.isCompleted };
-      }
-
-      // NÃO PRECISO ATUALIZAR ESSA TAREFA
-      return task;
-    });
+    const newTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
+    );
     setTasks(newTasks);
   }
 
@@ -44,11 +24,12 @@ function App() {
     const newTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(newTasks);
   }
+
   function onAddTaskSubmit(title, description) {
     const newTask = {
       id: v4(),
-      title: title,
-      description: description,
+      title,
+      description,
       isCompleted: false,
     };
     setTasks([...tasks, newTask]);

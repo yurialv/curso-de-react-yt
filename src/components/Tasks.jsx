@@ -22,7 +22,7 @@ function Tasks({ tasks, onTaskClick, onDeleteTaskClick }) {
               task.isCompleted ? "line-through" : ""
             }`}
           >
-            {task.isCompleted && <CheckIcon size={18} />}
+            {task.isCompleted && <CheckIcon />}
             {task.title}
           </button>
 
